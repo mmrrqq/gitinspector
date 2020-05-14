@@ -113,19 +113,29 @@ class BlameOutput(Outputable):
         if self.progress and sys.stdout.isatty() and format.is_interactive_format():
             terminal.clear_row()
 
+        blames_list = list(self.blames.get_summed_blames().items())
+        blames_list.sort(key=lambda x: x[1].rows, reverse=True)
+        total_blames = 0
+        for i in blames_list:
+            total_blames += i[1].rows
+        typed_blames = self.blames.get_typed_blames()
+        total_types = self.changes.get_total_types()
+
         self.out.writeln(textwrap.fill(BLAME_INFO_TEXT() + ":", width=terminal.get_size()[0]) + "\n")
         terminal.writeb(self.out,
                         terminal.ljust(_("Author"), 21) + terminal.rjust(_("Rows"), 10) +
                         terminal.rjust(_("Stability"), 15) +
-                        terminal.rjust(_("Age"), 13) + terminal.rjust(_("% in comments"), 20) + "\n")
+                        terminal.rjust(_("Age"), 13) + terminal.rjust(_("% in comments"), 20) +
+                        terminal.rjust(_("% remaining"), 18) + "\n")
 
-        for i in sorted(self.blames.get_summed_blames().items()):
+        for i in blames_list:
             committer = i[0]
             self.out.write(terminal.ljust(committer[0], 20)[0:20 - terminal.get_excess_column_count(committer[0])])
             self.out.write(str(i[1].rows).rjust(11))
             self.out.write("{0:.1f}".format(Blame.get_stability(i[0], i[1].rows, self.changes)).rjust(15))
             self.out.write("{0:.1f}".format(float(i[1].skew) / i[1].rows).rjust(13))
-            self.out.writeln("{0:.2f}".format(100.0 * i[1].comments / i[1].rows).rjust(20))
+            self.out.write("{0:.2f}".format(100.0 * i[1].comments / i[1].rows).rjust(20))
+            self.out.writeln("{0:.2f}".format(100.0 *  i[1].rows / total_blames).rjust(18))
 
     def output_xml(self):
         message_xml = "\t\t<message>" + BLAME_INFO_TEXT() + "</message>\n"
