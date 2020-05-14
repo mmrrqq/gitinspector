@@ -49,6 +49,7 @@ class FileType(Enum):
     HTML   = auto()
     JAVA   = auto()
     JAVASCRIPT = auto()
+    MATLAB = auto()
     OCAML  = auto()
     PYTHON = auto()
     RUBY   = auto()
@@ -82,6 +83,7 @@ class FileType(Enum):
         "java"     : JAVA,
         "js"       : JAVASCRIPT,
         "Makefile" : BUILD,
+        "m"        : MATLAB,
         "md"       : TXT,
         "ml"       : OCAML,
         "mli"      : OCAML,
