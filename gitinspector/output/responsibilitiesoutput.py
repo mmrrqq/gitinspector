@@ -27,6 +27,7 @@ from .outputable import Outputable
 RESPONSIBILITIES_INFO_TEXT = lambda: _("The following responsibilities, by author, were found in the current "
                                        "revision of the repository (comments are excluded from the line count, "
                                        "if possible)")
+NO_RESPONSIBILITIES_INFO_TEXT = lambda: _("No responsibilites have been found in the current revision of the repository.")
 MOSTLY_RESPONSIBLE_FOR_TEXT = lambda: _("is mostly responsible for")
 
 class ResponsibilitiesOutput(Outputable):
@@ -40,10 +41,15 @@ class ResponsibilitiesOutput(Outputable):
         self.out = runner.out
 
     def output_text(self):
-        self.out.writeln("\n" + textwrap.fill(RESPONSIBILITIES_INFO_TEXT() + ":",
-                                              width=terminal.get_size()[0]))
+        committer_responsibilities = self.blame.committers_by_responsibilities()
+        if committer_responsibilities:
+            self.out.writeln("\n" + textwrap.fill(RESPONSIBILITIES_INFO_TEXT() + ":",
+                                                  width=terminal.get_size()[0]))
+        else:
+            self.out.writeln("\n" + textwrap.fill(NO_RESPONSIBILITIES_INFO_TEXT(),
+                                                  width=terminal.get_size()[0]))
 
-        for committer in self.blame.committers_by_responsibilities():
+        for committer in committer_responsibilities:
             responsibilities = sorted(((resp[1], resp[0])
                                        for resp in self.blame.get_responsibilities(committer)),
                                       reverse=True)
@@ -62,9 +68,14 @@ class ResponsibilitiesOutput(Outputable):
                         break
 
     def output_html(self):
+        committer_responsibilities = self.blame.committers_by_responsibilities()
+        if (len(committer_responsibilities) == 0):
+            resp_txt = NO_RESPONSIBILITIES_INFO_TEXT()
+        else:
+            resp_txt = RESPONSIBILITIES_INFO_TEXT()
         resp_xml = "<table class='git2'>"
         par = "even"
-        for committer in self.blame.committers_by_responsibilities():
+        for committer in committer_responsibilities:
             responsibilities = sorted(((resp[1], resp[0])
                                        for resp in self.blame.get_responsibilities(committer)),
                                       reverse=True)
@@ -93,7 +104,7 @@ class ResponsibilitiesOutput(Outputable):
         with open(temp_file, 'r') as infile:
             src = string.Template( infile.read() )
             self.out.write(src.substitute(
-                resp_info_text=RESPONSIBILITIES_INFO_TEXT(),
+                resp_info_text=resp_txt,
                 resp_inner_text=resp_xml,
             ))
 
