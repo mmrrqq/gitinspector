@@ -21,6 +21,12 @@
           var max_work = $max_work;
           var files = Object.keys(ownerships).sort()
 
+	  if (files.length == 0)
+	      d3.select("div#repository_div div.box")
+	      .append("p")
+	      .style("margin-top", "2em")
+	      .text("No files have been found in the current revision of the repository.");
+
           function build_tree(parent_elem, parent_file, visibility) {
               var heads = files.filter((f) => ownerships[f].parent == parent_file);
               var lis = parent_elem.append("ul").classed("map_box", "true")
