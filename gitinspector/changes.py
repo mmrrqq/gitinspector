@@ -95,6 +95,7 @@ class FileType(Enum):
         "rs"       : RUST,
         "sh"       : SHELL,
         "tex"      : TEX,
+        "ts"       : JAVASCRIPT,
         "txt"      : TXT,
         "vb"       : VISUALBASIC,
         "xml"      : TXT,
