@@ -41,7 +41,7 @@ def get_basedir_git(path=None):
     # Test if the repository is bare
     with open(os.devnull, "w") as stderr:
         bare_command = subprocess.Popen(["git", "rev-parse", "--is-bare-repository"],
-                                        bufsize=1, stdout=subprocess.PIPE, stderr=stderr)
+                                        stdout=subprocess.PIPE, stderr=stderr)
 
         isbare = bare_command.stdout.readlines()
         bare_command.wait()
@@ -55,10 +55,10 @@ def get_basedir_git(path=None):
 
     if isbare:
         absolute_command = subprocess.Popen(["git", "rev-parse", "--git-dir"],
-                                            bufsize=1, stdout=subprocess.PIPE)
+                                            stdout=subprocess.PIPE)
     else:
         absolute_command = subprocess.Popen(["git", "rev-parse", "--show-toplevel"],
-                                            bufsize=1, stdout=subprocess.PIPE)
+                                            stdout=subprocess.PIPE)
 
     absolute_path = absolute_command.stdout.readlines()
     absolute_command.wait()

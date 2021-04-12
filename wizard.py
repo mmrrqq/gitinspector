@@ -93,7 +93,7 @@ def __initialize_authors_in_repository__(authors, repository):
 def __initialize_authors__(authors, repository):
     config_cmd = subprocess.Popen(["git", "-C", repository.location,
                                    "config", "inspector.aliases"],
-                                  bufsize=1, stdout=subprocess.PIPE)
+                                  stdout=subprocess.PIPE)
     config = config_cmd.stdout.readlines()
     config_cmd.wait()
     config_cmd.stdout.close()
@@ -118,7 +118,7 @@ def __reset_authors__(authors, repository):
 def __finalize__(authors, repository):
     config_cmd = subprocess.Popen(["git", "-C", repository.location,
                                    "config", "inspector.aliases", str(authors)],
-                                  bufsize=1, stdout=subprocess.PIPE)
+                                  stdout=subprocess.PIPE)
     config_cmd.wait()
     config_cmd.stdout.close()
 

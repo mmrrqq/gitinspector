@@ -24,7 +24,7 @@ import subprocess
 def local_branches():
     """Returns the list of branches appearing as local references.
     """
-    branch_p = subprocess.Popen(["git", "branch", "--format=%(refname)"], bufsize=1,
+    branch_p = subprocess.Popen(["git", "branch", "--format=%(refname)"],
                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     branches = branch_p.communicate()[0].splitlines()
     branches = [ b.decode("utf-8", "replace") for b in branches ]
@@ -38,7 +38,7 @@ def last_commit(branch, file):
     """Returns the date for the last commit on a file in a branch, in the
        Unix format, 0 if the file does not belong to the branch.
     """
-    log_p = subprocess.Popen(["git", "log", "-1", "--format=%at", branch, file], bufsize=1,
+    log_p = subprocess.Popen(["git", "log", "-1", "--format=%at", branch, file],
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     date_s = log_p.communicate()[0].strip().decode("utf-8")
     try:
@@ -65,7 +65,7 @@ def files(branch, config):
     if config.debug_mode:
         print(" ".join(ls_command))
 
-    ls_tree_p = subprocess.Popen(ls_command, bufsize=1,
+    ls_tree_p = subprocess.Popen(ls_command,
                                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     lines = ls_tree_p.communicate()[0].splitlines()
     lines = [ sanitize_filename(l) for l in lines ]
@@ -80,7 +80,7 @@ def commits(branch, since, until):
     """
     git_command = filter(None, ["git", "rev-list", "--reverse", # "--no-merges", # For oavsa
                                 since, until, branch])
-    git_rev_list_p = subprocess.Popen(git_command, bufsize=1,
+    git_rev_list_p = subprocess.Popen(git_command,
                                       stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     lines = git_rev_list_p.communicate()[0].splitlines()
     git_rev_list_p.wait()
@@ -107,7 +107,7 @@ def commit_chunks(hashes, since, until, config):
         print(git_command)
 
     git_log_r = subprocess.Popen(git_command,
-                                 bufsize=1, stdout=subprocess.PIPE, shell=True)
+                                 stdout=subprocess.PIPE, shell=True)
     lines = git_log_r.stdout.readlines()
     git_log_r.wait()
     git_log_r.stdout.close()
@@ -120,7 +120,7 @@ def commit_message(hash):
     """Returns the commit message of a given hash, as a list of strings"""
     git_command = filter(None, ["git", "show", "-s",
                                 "--pretty=%B", hash])
-    git_show_r = subprocess.Popen(git_command, bufsize=1, stdout=subprocess.PIPE)
+    git_show_r = subprocess.Popen(git_command, stdout=subprocess.PIPE)
     message = git_show_r.stdout.read() # all lines in one go
     git_show_r.wait()
     git_show_r.stdout.close()
@@ -143,7 +143,7 @@ def blames(sha, filename, config):
     if config.debug_mode:
         print(blame_command)
 
-    git_blame_cmd = subprocess.Popen(blame_command, bufsize=1, shell=True,
+    git_blame_cmd = subprocess.Popen(blame_command, shell=True,
                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     rows = git_blame_cmd.stdout.readlines()
     git_blame_cmd.wait()
@@ -157,7 +157,7 @@ def config(repo, variable, global_only):
     """
     setting_cmd = subprocess.Popen(filter(None, ["git", "-C", repo, "config",
                                                  "--global" if global_only else "",
-                                                 "inspector." + variable]), bufsize=1,
+                                                 "inspector." + variable]),
                                    stdout=subprocess.PIPE)
     setting_cmd.wait()
 

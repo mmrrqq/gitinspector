@@ -63,12 +63,12 @@ def init():
 
         __enabled__ = True
         __installed__ = True
-        __translation__.install(True)
+        __translation__.install()
 
 
 def init_null():
     __translation__ = gettext.NullTranslations()
-    __translation__.install(True)
+    __translation__.install()
 
 
 def check_compatibility(version):

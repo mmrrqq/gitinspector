@@ -61,7 +61,7 @@ class MetricsLogic(object):
         self.cyclomatic_complexity_density = {}
 
         ls_tree_p = subprocess.Popen(["git", "ls-tree", "--name-only", "-r",
-                                      interval.get_ref()], bufsize=1,
+                                      interval.get_ref()],
                                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         lines = ls_tree_p.communicate()[0].splitlines()
         ls_tree_p.wait()
@@ -76,7 +76,7 @@ class MetricsLogic(object):
                 if filtering.is_acceptable_file_name(FileDiff.get_filename(i)):
                     file_cmd = subprocess.Popen(["git", "show",
                                                  interval.get_ref() + ":{0}".format(i.strip())],
-                                                bufsize=1, stdout=subprocess.PIPE)
+                                                stdout=subprocess.PIPE)
                     file_r = file_cmd.stdout.readlines()
                     file_cmd.wait()
                     file_cmd.stdout.close()

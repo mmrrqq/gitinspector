@@ -44,7 +44,7 @@ class Repository(object):
             git_clone = subprocess.Popen(["git", "clone",
                                           "-b " + config.branch,
                                           url, path],
-                                         bufsize=1, stdout=sys.stderr)
+                                         stdout=sys.stderr)
             git_clone.wait()
 
             if git_clone.returncode != 0:
@@ -63,7 +63,7 @@ class Repository(object):
     def authors(self):
         authors_cmd = subprocess.Popen(["git", "-C", self.location, "shortlog",
                                         "-esn", self.config.branch],
-                                       bufsize=1, stdout=subprocess.PIPE)
+                                       stdout=subprocess.PIPE)
         rows = authors_cmd.stdout.readlines()
         authors_cmd.wait()
         authors_cmd.stdout.close()
