@@ -249,6 +249,8 @@ def __parse_arguments__(args=None):
                           "system language if a translation is available"))
     parser.add_argument('-m', '--metrics', action='store_true', help=
                         _("include checks for certain metrics during the analysis of commits"))
+    parser.add_argument('-n', '--name', metavar='NAME', help=
+                        _("specify a name for the repository"))
     parser.add_argument('-o', '--output', metavar='FILE', help=
                         _("output the statistics in the given file"))
     parser.add_argument('-r', '--responsibilities', action='store_true', help=

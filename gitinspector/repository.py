@@ -38,8 +38,11 @@ class Repository(object):
     def create(cls, url, config):
         parsed_url = urlparse(url)
 
-        if parsed_url.scheme == "file" or parsed_url.scheme == "git" or parsed_url.scheme == "http" or \
-           parsed_url.scheme == "https" or parsed_url.scheme == "ssh":
+        if parsed_url.scheme == "file" or \
+           parsed_url.scheme == "git" or \
+           parsed_url.scheme == "http" or \
+           parsed_url.scheme == "https" or \
+           parsed_url.scheme == "ssh":
             path = tempfile.mkdtemp(suffix=".gitinspector")
             git_clone = subprocess.Popen(["git", "clone",
                                           "-b " + config.branch,
@@ -53,7 +56,7 @@ class Repository(object):
             cls.cloned_paths.append(path)
             return Repository(os.path.basename(parsed_url.path), path, config)
         else:
-            return Repository(None, os.path.abspath(url), config)
+            return Repository(config.name, os.path.abspath(url), config)
 
     @classmethod
     def delete_all(cls):
