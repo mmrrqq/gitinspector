@@ -59,7 +59,7 @@ def __add_one_filter__(string,filter_type=Filters.FILE_IN):
         if string.startswith(filter.value):
             __filters__[filter][0].add(string[len(filter.value) + 1:])
             return
-    __filters__[Filters.FILE_IN][0].add(string)
+    __filters__[filter_type][0].add(string)
 
 def add_filters(string):
     """

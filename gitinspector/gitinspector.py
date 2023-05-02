@@ -57,6 +57,7 @@ DEFAULT_EXTENSIONS = ["*.java", "*.cs", "*.rb",
                       "*akefile", "README", "INSTALL",
                      ]
 
+DEFAULT_IGNORED = [ "node_modules/*", ".parcel-cache/*" ]
 
 class StdoutWriter(io.StringIO):
     def __init__(self):
@@ -89,6 +90,9 @@ class Runner(object):
         if config.exclude:
             for pat in config.exclude:
                 filtering.add_filters(pat)
+        else:
+            for f in DEFAULT_IGNORED:
+                filtering.__add_one_filter__(f, Filters.FILE_OUT)
         for f in config.file_types.split(','):
             filtering.__add_one_filter__(f)
 
