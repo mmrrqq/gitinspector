@@ -44,6 +44,7 @@ class FileType(Enum):
     BUILD  = auto()
     CPP    = auto()
     CSHARP = auto()
+    CSS    = auto()
     GIT    = auto()
     GO     = auto()
     HTML   = auto()
@@ -51,11 +52,13 @@ class FileType(Enum):
     JAVASCRIPT = auto()
     MATLAB = auto()
     OCAML  = auto()
+    PHP    = auto()
     PYTHON = auto()
     RUBY   = auto()
     RUST   = auto()
     SCHEME = auto()
     SHELL  = auto()
+    SQL    = auto()
     TEX    = auto()
     TXT    = auto()
     VISUALBASIC = auto()
@@ -68,6 +71,7 @@ class FileType(Enum):
         "cxx"      : CPP,
         "cmake"    : BUILD,
         "cs"       : CSHARP,
+        "css"      : CSS,
         ".gitignore" : GIT,
         "go"       : GO,
         "h"        : CPP,
@@ -87,6 +91,7 @@ class FileType(Enum):
         "md"       : TXT,
         "ml"       : OCAML,
         "mli"      : OCAML,
+        "php"      : PHP,
         "py"       : PYTHON,
         "Rakefile" : BUILD,
         "README"   : TXT,
@@ -94,6 +99,7 @@ class FileType(Enum):
         "rkt"      : SCHEME,
         "rs"       : RUST,
         "sh"       : SHELL,
+        "sql"      : SQL,
         "tex"      : TEX,
         "ts"       : JAVASCRIPT,
         "txt"      : TXT,

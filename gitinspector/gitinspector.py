@@ -44,11 +44,11 @@ localization.init()
 # The list of extensions that are analyzed when no filter is
 # specified for the files.
 DEFAULT_EXTENSIONS = ["*.java", "*.cs", "*.rb",
-                      "*.c",    "*.cc", "*.cpp", ".cxx",
-                      "*.h",    "*.hh", "*.hpp", ".hxx",
+                      "*.c",    "*.cc", "*.cpp", "*.css", ".cxx",
+                      "*.h",    "*.hh", "*.hpp", "*.html", ".hxx",
                       "*.i",    "*.ii", "*.ipp", ".ixx",
                       "*.rs",   "*.go",  "*.ml", "*.mli", "*.m",
-                      "*.js",   "*.pl",  "*.pm", "*.py", "*.sh", "*.vb",
+                      "*.js",   "*.php", "*.pl",  "*.pm", "*.py", "*.sh", "*.vb",
                       "*.ts",   "*.tex",  "*.bib",
                       "*.md",   "*.txt", "*.xml",
                       "*.s",    "*.asm", "*.rkt",
