@@ -18,7 +18,9 @@
 # along with gitinspector. If not, see <http://www.gnu.org/licenses/>.
 
 import itertools
+import os
 import subprocess
+import sys
 
 
 def local_branches():
@@ -107,10 +109,17 @@ def commit_chunks(hashes, since, until, config):
         print(git_command)
 
     git_log_r = subprocess.Popen(git_command,
-                                 stdout=subprocess.PIPE, shell=True)
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     lines = git_log_r.stdout.readlines()
+    lines_stderr = git_log_r.stderr.readlines()
     git_log_r.wait()
     git_log_r.stdout.close()
+    git_log_r.stderr.close()
+    if git_log_r.returncode != 0:
+        print(f"git_utils.commit_chunks failed on repository '{os.getcwd()}': ", file=sys.stderr)
+        for a_line in lines_stderr:
+            print(a_line.decode().strip())
+        return []
     chunks = [ list(g) for (k,g) in itertools.groupby(lines, key=lambda l: l==b'---\n') ]
     chunks = list(filter(lambda g: g[0] != b'---\n', chunks))
     return chunks
