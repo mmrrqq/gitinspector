@@ -160,7 +160,7 @@ class FileDiff(object):
 
     @staticmethod
     def is_filediff_line(string):
-        pattern = re.compile("^[^\|]+\|[ ]*(Bin[ ].*|[0-9]+[ ]*[+-]*)$")
+        pattern = re.compile("^[^|]+[|][ ]*(Bin[ ].*|[0-9]+[ ]*[+-]*)$")
         return pattern.match(string) is not None
 
     @staticmethod
