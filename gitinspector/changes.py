@@ -60,7 +60,8 @@ class FileType(Enum):
     SHELL  = auto()
     SQL    = auto()
     TEX    = auto()
-    TXT    = auto()
+    TXT    = auto()    
+    VUE    = auto()
     VISUALBASIC = auto()
 
     __types__ = {
@@ -102,8 +103,9 @@ class FileType(Enum):
         "sql"      : SQL,
         "tex"      : TEX,
         "ts"       : JAVASCRIPT,
-        "txt"      : TXT,
+        "txt"      : TXT,        
         "vb"       : VISUALBASIC,
+        "vue"      : VUE,
         "xml"      : TXT,
     }
 
