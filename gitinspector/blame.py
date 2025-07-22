@@ -183,8 +183,10 @@ class Blame(object):
                     else:
                         lines[f] = b
         else:
+            print(changes.authors)
+            print(changes.files)
             lines = {l: self.config.branch
-                     for l in git_utils.files(changes.last_commit().sha, config)}
+                     for l in git_utils.files(changes.last_commit().sha, config) if changes.has_commits()}
 
         if lines:
             progress_text = _(PROGRESS_TEXT)

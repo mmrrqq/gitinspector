@@ -396,6 +396,9 @@ class Changes(object):
 
     def last_commit(self):
         return self.__commits__[-1]
+    
+    def has_commits(self):
+        return len(self.__commits__) > 0
 
     def diffs_for_file(self, file):
         return [d for c in self.__commits__ for d in c.filediffs if d.name == file]
